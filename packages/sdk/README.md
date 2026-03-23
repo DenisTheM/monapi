@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.svg" alt="Tollgate" width="100" />
+</p>
+
 <h1 align="center">@tollgate/sdk</h1>
 
 <p align="center">
