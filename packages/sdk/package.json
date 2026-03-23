@@ -1,5 +1,5 @@
 {
-  "name": "@tollgate/sdk",
+  "name": "@monapi/sdk",
   "version": "0.1.2",
   "description": "One-line API monetization with x402. Accept crypto payments with a single function call.",
   "license": "MIT",
@@ -25,7 +25,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "tollgate": "./dist/cli/index.js"
+    "monapi": "./dist/cli/index.js"
   },
   "files": [
     "dist"

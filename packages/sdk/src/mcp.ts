@@ -1,10 +1,10 @@
-import type { TollgateConfig } from "./core/types.js";
+import type { MonapiConfig } from "./core/types.js";
 import { validateConfig } from "./core/validate.js";
 import { resolveBaseConfig, priceToMoney } from "./core/resolver.js";
 
-export type { TollgateConfig, PaymentEvent, OnPaymentCallback } from "./core/types.js";
+export type { MonapiConfig, PaymentEvent, OnPaymentCallback } from "./core/types.js";
 
-interface TollgateMcpConfig extends Pick<TollgateConfig, "wallet" | "network" | "token" | "maxTimeoutSeconds" | "facilitatorUrl"> {
+interface MonapiMcpConfig extends Pick<MonapiConfig, "wallet" | "network" | "token" | "maxTimeoutSeconds" | "facilitatorUrl"> {
   price: number;
 }
 
@@ -15,9 +15,9 @@ interface TollgateMcpConfig extends Pick<TollgateConfig, "wallet" | "network" | 
  *
  * @example
  * ```ts
- * import { tollgateMcp } from "@tollgate/sdk/mcp";
+ * import { monapiMcp } from "@monapi/sdk/mcp";
  *
- * const paid = tollgateMcp({
+ * const paid = monapiMcp({
  *   price: 0.01,
  *   wallet: process.env.WALLET!,
  * });
@@ -29,7 +29,7 @@ interface TollgateMcpConfig extends Pick<TollgateConfig, "wallet" | "network" | 
  * );
  * ```
  */
-export function tollgateMcp(config: TollgateMcpConfig) {
+export function monapiMcp(config: MonapiMcpConfig) {
   validateConfig(config);
 
   const resolved = resolveBaseConfig(config);

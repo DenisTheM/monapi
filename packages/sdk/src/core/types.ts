@@ -7,7 +7,7 @@ export type NetworkName =
   | "polygon-amoy";
 export type TokenName = "USDC";
 
-export interface TollgateConfig {
+export interface MonapiConfig {
   /** EVM wallet address (0x...) to receive payments */
   wallet: string;
   /** Price in USD, applied globally to all routes */

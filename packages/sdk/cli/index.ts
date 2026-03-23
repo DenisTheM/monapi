@@ -33,12 +33,12 @@ const EVM_ADDRESS_RE = /^0x[0-9a-fA-F]{40}$/;
 const SNIPPETS = {
   express: (wallet: string, network: string, price: string) => `
 import express from "express";
-import { tollgate } from "@tollgate/sdk";
+import { monapi } from "@monapi/sdk";
 
 const app = express();
 
-app.use(tollgate({
-  wallet: process.env.TOLLGATE_WALLET || "${wallet}",
+app.use(monapi({
+  wallet: process.env.MONAPI_WALLET || "${wallet}",
   price: ${price},
   network: "${network}",
 }));
@@ -51,15 +51,15 @@ app.listen(3000, () => console.log("Server running on port 3000"));
 `.trim(),
 
   next: (wallet: string, network: string, price: string) => `
-import { withTollgate } from "@tollgate/sdk/next";
+import { withMonapi } from "@monapi/sdk/next";
 import { NextResponse } from "next/server";
 
 async function handler(request: Request) {
   return NextResponse.json({ message: "Paid content!" });
 }
 
-export const GET = withTollgate(handler, {
-  wallet: process.env.TOLLGATE_WALLET || "${wallet}",
+export const GET = withMonapi(handler, {
+  wallet: process.env.MONAPI_WALLET || "${wallet}",
   price: ${price},
   network: "${network}",
 });
@@ -67,13 +67,13 @@ export const GET = withTollgate(handler, {
 
   mcp: (wallet: string, network: string, price: string) => `
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { tollgateMcp } from "@tollgate/sdk/mcp";
+import { monapiMcp } from "@monapi/sdk/mcp";
 import { z } from "zod";
 
 const server = new McpServer({ name: "my-server", version: "1.0.0" });
 
-const paid = tollgateMcp({
-  wallet: process.env.TOLLGATE_WALLET || "${wallet}",
+const paid = monapiMcp({
+  wallet: process.env.MONAPI_WALLET || "${wallet}",
   price: ${price},
   network: "${network}",
 });
@@ -87,7 +87,7 @@ server.tool("search", { query: z.string() },
 };
 
 async function main() {
-  console.log("\n⚡ Tollgate Setup\n");
+  console.log("\n⚡ MonAPI Setup\n");
   console.log("Monetize your API with one line of code.\n");
 
   // 1. Framework detection
@@ -150,20 +150,20 @@ Why Coinbase:
   }
 
   // 5. Create .env
-  const envContent = `TOLLGATE_WALLET=${wallet}\nTOLLGATE_NETWORK=${network}\n`;
+  const envContent = `MONAPI_WALLET=${wallet}\nMONAPI_NETWORK=${network}\n`;
   const envPath = path.resolve(".env");
 
   if (fs.existsSync(envPath)) {
     const existing = fs.readFileSync(envPath, "utf-8");
-    if (!existing.includes("TOLLGATE_WALLET")) {
+    if (!existing.includes("MONAPI_WALLET")) {
       fs.appendFileSync(envPath, "\n" + envContent);
-      console.log("\n✅ Added TOLLGATE_WALLET and TOLLGATE_NETWORK to existing .env");
+      console.log("\n✅ Added MONAPI_WALLET and MONAPI_NETWORK to existing .env");
     } else {
-      console.log("\n⚠️  .env already contains TOLLGATE_WALLET — skipping");
+      console.log("\n⚠️  .env already contains MONAPI_WALLET — skipping");
     }
   } else {
     fs.writeFileSync(envPath, envContent);
-    console.log("\n✅ Created .env with TOLLGATE_WALLET and TOLLGATE_NETWORK");
+    console.log("\n✅ Created .env with MONAPI_WALLET and MONAPI_NETWORK");
   }
 
   // 6. Show snippet

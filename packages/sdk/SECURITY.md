@@ -2,9 +2,9 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in `@tollgate/sdk`, please report it responsibly.
+If you discover a security vulnerability in `@monapi/sdk`, please report it responsibly.
 
-**Email:** security@tollgate.me
+**Email:** security@monapi.dev
 
 **Please include:**
 - Description of the vulnerability
@@ -17,7 +17,7 @@ If you discover a security vulnerability in `@tollgate/sdk`, please report it re
 ## What qualifies?
 
 - Input validation bypasses
-- Dependency vulnerabilities that affect Tollgate users
+- Dependency vulnerabilities that affect MonAPI users
 - Supply chain attack vectors
 - Payment routing manipulation
 - Configuration injection
@@ -30,7 +30,7 @@ If you discover a security vulnerability in `@tollgate/sdk`, please report it re
 
 ## Scope
 
-This policy covers the `@tollgate/sdk` npm package and its source code at https://github.com/tollgate/tollgate.
+This policy covers the `@monapi/sdk` npm package and its source code at https://github.com/DenisTheM/monapi.
 
 ## Safe Harbor
 

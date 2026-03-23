@@ -1,9 +1,9 @@
 import type { RequestHandler } from "express";
-import type { TollgateConfig } from "./core/types.js";
+import type { MonapiConfig } from "./core/types.js";
 import { validateConfig } from "./core/validate.js";
 import { buildRoutesConfig, resolveBaseConfig } from "./core/resolver.js";
 
-export type { TollgateConfig, PaymentEvent, OnPaymentCallback } from "./core/types.js";
+export type { MonapiConfig, PaymentEvent, OnPaymentCallback } from "./core/types.js";
 export { resolveNetwork, resolveToken, priceToAtomicUnits, priceToMoney } from "./core/resolver.js";
 export { NETWORKS, TOKENS, USDC_DECIMALS, DEFAULT_FACILITATOR_URL } from "./core/constants.js";
 
@@ -12,19 +12,19 @@ export { NETWORKS, TOKENS, USDC_DECIMALS, DEFAULT_FACILITATOR_URL } from "./core
  *
  * @example
  * ```ts
- * import { tollgate } from "@tollgate/sdk";
+ * import { monapi } from "@monapi/sdk";
  *
  * // Global pricing
- * app.use(tollgate({ wallet: "0x...", price: 0.01 }));
+ * app.use(monapi({ wallet: "0x...", price: 0.01 }));
  *
  * // Per-route pricing
- * app.use(tollgate({
+ * app.use(monapi({
  *   wallet: "0x...",
  *   routes: { "/api/weather": 0.01, "/api/forecast": 0.05 },
  * }));
  * ```
  */
-export function tollgate(config: TollgateConfig): RequestHandler {
+export function monapi(config: MonapiConfig): RequestHandler {
   validateConfig(config);
 
   const routes = buildRoutesConfig(config);

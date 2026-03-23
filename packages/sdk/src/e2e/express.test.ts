@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import express from "express";
 import type { Server } from "http";
-import { tollgate } from "../index.js";
+import { monapi } from "../index.js";
 
 const WALLET = "0x" + "a".repeat(40);
 let server: Server;
@@ -14,7 +14,7 @@ describe("Express E2E", () => {
     // Global price route
     app.use(
       "/api/global",
-      tollgate({ wallet: WALLET, price: 0.01, network: "base-sepolia" })
+      monapi({ wallet: WALLET, price: 0.01, network: "base-sepolia" })
     );
     app.get("/api/global", (_req, res) => {
       res.json({ message: "paid content" });
@@ -22,7 +22,7 @@ describe("Express E2E", () => {
 
     // Per-route pricing
     app.use(
-      tollgate({
+      monapi({
         wallet: WALLET,
         network: "base-sepolia",
         routes: {
@@ -38,7 +38,7 @@ describe("Express E2E", () => {
       res.json({ tier: "expensive" });
     });
 
-    // Free route (no tollgate)
+    // Free route (no monapi)
     app.get("/api/free", (_req, res) => {
       res.json({ message: "free content" });
     });

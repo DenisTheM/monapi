@@ -1,25 +1,25 @@
-import type { TollgateConfig } from "./core/types.js";
+import type { MonapiConfig } from "./core/types.js";
 import { validateConfig } from "./core/validate.js";
 import { buildRoutesConfig, resolveBaseConfig, buildPaymentOption } from "./core/resolver.js";
 
-export type { TollgateConfig, PaymentEvent, OnPaymentCallback } from "./core/types.js";
+export type { MonapiConfig, PaymentEvent, OnPaymentCallback } from "./core/types.js";
 
 /**
  * Wrap a Next.js route handler with x402 payment.
  *
  * @example
  * ```ts
- * import { withTollgate } from "@tollgate/sdk/next";
+ * import { withMonapi } from "@monapi/sdk/next";
  *
- * export default withTollgate(handler, {
+ * export default withMonapi(handler, {
  *   price: 0.01,
  *   wallet: process.env.WALLET!,
  * });
  * ```
  */
-export function withTollgate<T = unknown>(
+export function withMonapi<T = unknown>(
   routeHandler: (request: Request) => Promise<Response>,
-  config: TollgateConfig
+  config: MonapiConfig
 ): (request: Request) => Promise<Response> {
   validateConfig(config);
 
@@ -52,15 +52,15 @@ export function withTollgate<T = unknown>(
  *
  * @example
  * ```ts
- * import { tollgateProxy } from "@tollgate/sdk/next";
+ * import { monapiProxy } from "@monapi/sdk/next";
  *
- * export default tollgateProxy({
+ * export default monapiProxy({
  *   wallet: process.env.WALLET!,
  *   routes: { "/api/weather": 0.01 },
  * });
  * ```
  */
-export function tollgateProxy(config: TollgateConfig) {
+export function monapiProxy(config: MonapiConfig) {
   validateConfig(config);
 
   const routes = buildRoutesConfig(config);

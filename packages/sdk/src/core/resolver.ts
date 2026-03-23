@@ -1,4 +1,4 @@
-import type { NetworkName, TokenName, TollgateConfig } from "./types.js";
+import type { NetworkName, TokenName, MonapiConfig } from "./types.js";
 import {
   NETWORKS,
   TOKENS,
@@ -9,7 +9,7 @@ import {
 export function resolveNetwork(name: NetworkName): string {
   const caip2 = NETWORKS[name];
   if (!caip2) {
-    throw new Error(`[tollgate] Unknown network: "${name}"`);
+    throw new Error(`[monapi] Unknown network: "${name}"`);
   }
   return caip2;
 }
@@ -18,7 +18,7 @@ export function resolveToken(network: NetworkName, token: TokenName): string {
   const address = TOKENS[network]?.[token];
   if (!address) {
     throw new Error(
-      `[tollgate] Token "${token}" not available on network "${network}"`
+      `[monapi] Token "${token}" not available on network "${network}"`
     );
   }
   return address;
@@ -42,7 +42,7 @@ export interface ResolvedConfig {
   wallet: string;
 }
 
-export function resolveBaseConfig(config: TollgateConfig): ResolvedConfig {
+export function resolveBaseConfig(config: MonapiConfig): ResolvedConfig {
   const network = config.network ?? "base";
   const token = config.token ?? "USDC";
 
@@ -70,10 +70,10 @@ export function buildPaymentOption(resolved: ResolvedConfig, usdPrice: number) {
 }
 
 /**
- * Build x402-compatible RoutesConfig from TollgateConfig.
+ * Build x402-compatible RoutesConfig from MonapiConfig.
  * Returns a record of route patterns → RouteConfig objects.
  */
-export function buildRoutesConfig(config: TollgateConfig) {
+export function buildRoutesConfig(config: MonapiConfig) {
   const resolved = resolveBaseConfig(config);
   const routes: Record<string, number> = {};
 

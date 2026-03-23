@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/DenisTheM/tollgate-sdk/main/packages/sdk/assets/logo.svg" alt="Tollgate" width="100" />
+  <img src="https://raw.githubusercontent.com/DenisTheM/monapi/main/packages/sdk/assets/logo.svg" alt="MonAPI" width="100" />
 </p>
 
-<h1 align="center">@tollgate/sdk</h1>
+<h1 align="center">@monapi/sdk</h1>
 
 <p align="center">
   <strong>Monetize any API with one line of code.</strong><br />
@@ -10,22 +10,22 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@tollgate/sdk"><img src="https://img.shields.io/npm/v/@tollgate/sdk?color=blue" alt="npm" /></a>
-  <a href="https://github.com/DenisTheM/tollgate-sdk/actions/workflows/sdk-ci.yml"><img src="https://github.com/DenisTheM/tollgate-sdk/actions/workflows/sdk-ci.yml/badge.svg" alt="CI" /></a>
-  <a href="https://github.com/DenisTheM/tollgate-sdk/blob/main/packages/sdk/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License" /></a>
+  <a href="https://www.npmjs.com/package/@monapi/sdk"><img src="https://img.shields.io/npm/v/@monapi/sdk?color=blue" alt="npm" /></a>
+  <a href="https://github.com/DenisTheM/monapi/actions/workflows/sdk-ci.yml"><img src="https://github.com/DenisTheM/monapi/actions/workflows/sdk-ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/DenisTheM/monapi/blob/main/packages/sdk/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License" /></a>
 </p>
 
 ---
 
-## Why Tollgate?
+## Why MonAPI?
 
 The [x402 protocol](https://www.x402.org) enables native HTTP payments — but integrating it requires understanding CAIP-2 network IDs, token contract addresses, facilitator configuration, scheme registration, and more.
 
-**Tollgate wraps all of that into a single function call.** You provide your wallet address and a price. We handle the rest.
+**MonAPI wraps all of that into a single function call.** You provide your wallet address and a price. We handle the rest.
 
 ```
 Before (raw x402):  7+ concepts, 30+ lines of boilerplate
-After  (Tollgate):  1 function, 3 lines of code
+After  (MonAPI):  1 function, 3 lines of code
 ```
 
 ---
@@ -35,18 +35,18 @@ After  (Tollgate):  1 function, 3 lines of code
 ### 1. Install
 
 ```bash
-npm install @tollgate/sdk @x402/express
+npm install @monapi/sdk @x402/express
 ```
 
 ### 2. Add to your API
 
 ```typescript
 import express from "express";
-import { tollgate } from "@tollgate/sdk";
+import { monapi } from "@monapi/sdk";
 
 const app = express();
 
-app.use(tollgate({
+app.use(monapi({
   wallet: "0xYourWalletAddress",
   price: 0.01, // $0.01 USDC per request
 }));
@@ -75,17 +75,17 @@ That's it. Any x402-compatible client (including AI agents with Coinbase wallets
 ### Express
 
 ```typescript
-import { tollgate } from "@tollgate/sdk";
+import { monapi } from "@monapi/sdk";
 
 // Global pricing — every route costs $0.01
-app.use(tollgate({
-  wallet: process.env.TOLLGATE_WALLET,
+app.use(monapi({
+  wallet: process.env.MONAPI_WALLET,
   price: 0.01,
 }));
 
 // Per-route pricing
-app.use(tollgate({
-  wallet: process.env.TOLLGATE_WALLET,
+app.use(monapi({
+  wallet: process.env.MONAPI_WALLET,
   routes: {
     "/api/weather":   0.01,
     "/api/forecast":  0.05,
@@ -97,15 +97,15 @@ app.use(tollgate({
 ### Next.js
 
 ```typescript
-import { withTollgate } from "@tollgate/sdk/next";
+import { withMonapi } from "@monapi/sdk/next";
 import { NextResponse } from "next/server";
 
 async function handler(request: Request) {
   return NextResponse.json({ forecast: "sunny" });
 }
 
-export const GET = withTollgate(handler, {
-  wallet: process.env.TOLLGATE_WALLET,
+export const GET = withMonapi(handler, {
+  wallet: process.env.MONAPI_WALLET,
   price: 0.01,
 });
 ```
@@ -113,10 +113,10 @@ export const GET = withTollgate(handler, {
 For protecting multiple routes with a proxy:
 
 ```typescript
-import { tollgateProxy } from "@tollgate/sdk/next";
+import { monapiProxy } from "@monapi/sdk/next";
 
-export default tollgateProxy({
-  wallet: process.env.TOLLGATE_WALLET,
+export default monapiProxy({
+  wallet: process.env.MONAPI_WALLET,
   routes: {
     "/api/weather": 0.01,
     "/api/forecast": 0.05,
@@ -128,13 +128,13 @@ export default tollgateProxy({
 
 ```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { tollgateMcp } from "@tollgate/sdk/mcp";
+import { monapiMcp } from "@monapi/sdk/mcp";
 import { z } from "zod";
 
 const server = new McpServer({ name: "my-server", version: "1.0.0" });
 
-const paid = tollgateMcp({
-  wallet: process.env.TOLLGATE_WALLET,
+const paid = monapiMcp({
+  wallet: process.env.MONAPI_WALLET,
   price: 0.10,
 });
 
@@ -152,7 +152,7 @@ server.tool("search", { query: z.string() },
 Don't want to configure manually? Use the CLI:
 
 ```bash
-npx tollgate init
+npx monapi init
 ```
 
 The wizard will:
@@ -168,7 +168,7 @@ The wizard will:
 All options with their defaults:
 
 ```typescript
-tollgate({
+monapi({
   // Required
   wallet: "0x...",               // Your EVM wallet address (receives payments)
 
@@ -193,8 +193,8 @@ tollgate({
 Track successful payments with the `onPayment` callback:
 
 ```typescript
-app.use(tollgate({
-  wallet: process.env.TOLLGATE_WALLET,
+app.use(monapi({
+  wallet: process.env.MONAPI_WALLET,
   price: 0.01,
   onPayment: (event) => {
     console.log(`Received $${event.amount} from ${event.payer} on ${event.route}`);
@@ -212,7 +212,7 @@ The callback is fire-and-forget — it never blocks the API response.
 ```
 1. Client calls your API
          ↓
-2. Tollgate middleware intercepts the request
+2. MonAPI middleware intercepts the request
          ↓
 3. No payment? → Returns 402 Payment Required
    (includes: price, token, network, wallet address)
@@ -228,7 +228,7 @@ The callback is fire-and-forget — it never blocks the API response.
 8. USDC arrives in your wallet
 ```
 
-**No Tollgate account needed.** No dashboard, no API keys, no middleman. Payments go directly from the client to your wallet on the blockchain.
+**No MonAPI account needed.** No dashboard, no API keys, no middleman. Payments go directly from the client to your wallet on the blockchain.
 
 **Zero gas fees for agents.** USDC payments use EIP-3009 (`transferWithAuthorization`) — the x402 facilitator sponsors gas. Agents only need USDC, no native tokens like ETH or MATIC.
 
@@ -274,7 +274,7 @@ Any EVM-compatible wallet works — MetaMask, Rainbow, etc.
 
 ## Security
 
-- **No private keys** — Tollgate only uses your public wallet address
+- **No private keys** — MonAPI only uses your public wallet address
 - **No data storage** — The SDK runs entirely in your infrastructure
 - **No middleman** — Payments go directly from client to your wallet
 - **Input validation** — Wallet addresses, prices, routes, and URLs are rigorously validated
@@ -297,13 +297,13 @@ Install the x402 package for your framework:
 
 ```bash
 # Express
-npm install @tollgate/sdk @x402/express
+npm install @monapi/sdk @x402/express
 
 # Next.js
-npm install @tollgate/sdk @x402/next
+npm install @monapi/sdk @x402/next
 
 # MCP
-npm install @tollgate/sdk @x402/mcp
+npm install @monapi/sdk @x402/mcp
 ```
 
 ---
@@ -314,7 +314,7 @@ npm install @tollgate/sdk @x402/mcp
 AI agents with x402-compatible wallets (like Coinbase AgentKit) automatically detect the 402 response, pay the requested amount in USDC, and retry the request — all without human intervention. Agents only need USDC — no native tokens (ETH, MATIC) required. Gas fees are sponsored by the x402 facilitator.
 
 **What are the transaction fees?**
-Base network fees are typically < $0.01 per transaction. There are no Tollgate fees.
+Base network fees are typically < $0.01 per transaction. There are no MonAPI fees.
 
 **Can I change prices without redeploying?**
 Currently, prices are set in code. Dynamic pricing and a management dashboard are planned for a future release.
@@ -351,5 +351,5 @@ We welcome contributions. Please open an issue first to discuss what you'd like 
 ---
 
 <p align="center">
-  <a href="https://tollgate.sh">tollgate.sh</a> · Powered by <a href="https://www.x402.org">x402</a>
+  <a href="https://monapi.dev">monapi.dev</a> · Powered by <a href="https://www.x402.org">x402</a>
 </p>

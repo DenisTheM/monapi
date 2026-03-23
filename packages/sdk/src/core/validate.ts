@@ -1,4 +1,4 @@
-import type { TollgateConfig } from "./types.js";
+import type { MonapiConfig } from "./types.js";
 import { NETWORKS, TOKENS } from "./constants.js";
 
 const EVM_ADDRESS_RE = /^0x[0-9a-fA-F]{40}$/;
@@ -34,7 +34,7 @@ function warnIfNotChecksummed(address: string): void {
     // A full EIP-55 check would require a keccak256 dependency.
   } else if (!isAllLower) {
     console.warn(
-      `[tollgate] Wallet address "${address}" is all-uppercase. Consider using EIP-55 checksummed or lowercase format.`
+      `[monapi] Wallet address "${address}" is all-uppercase. Consider using EIP-55 checksummed or lowercase format.`
     );
   }
 }
@@ -42,31 +42,31 @@ function warnIfNotChecksummed(address: string): void {
 function validatePrice(price: number, label: string): void {
   if (!Number.isFinite(price)) {
     throw new Error(
-      `[tollgate] ${label} must be a finite number, got ${price}`
+      `[monapi] ${label} must be a finite number, got ${price}`
     );
   }
   if (price <= 0) {
-    throw new Error(`[tollgate] ${label} must be greater than 0`);
+    throw new Error(`[monapi] ${label} must be greater than 0`);
   }
   if (price > MAX_PRICE_USD) {
     throw new Error(
-      `[tollgate] ${label} exceeds maximum of $${MAX_PRICE_USD}. Got $${price}.`
+      `[monapi] ${label} exceeds maximum of $${MAX_PRICE_USD}. Got $${price}.`
     );
   }
 }
 
 function validateRoutePattern(route: string): void {
   if (route === "") {
-    throw new Error("[tollgate] Route pattern must not be empty");
+    throw new Error("[monapi] Route pattern must not be empty");
   }
   if (DANGEROUS_ROUTE_RE.test(route)) {
     throw new Error(
-      `[tollgate] Route pattern "${route}" contains disallowed characters (?, #, \\, or ://)`
+      `[monapi] Route pattern "${route}" contains disallowed characters (?, #, \\, or ://)`
     );
   }
   if (!SAFE_ROUTE_RE.test(route)) {
     throw new Error(
-      `[tollgate] Route pattern "${route}" is invalid. Must start with "/" or be "*".`
+      `[monapi] Route pattern "${route}" is invalid. Must start with "/" or be "*".`
     );
   }
 }
@@ -77,7 +77,7 @@ function validateFacilitatorUrl(url: string): void {
     parsed = new URL(url);
   } catch {
     throw new Error(
-      `[tollgate] Invalid facilitatorUrl: "${url}". Must be a valid URL.`
+      `[monapi] Invalid facilitatorUrl: "${url}". Must be a valid URL.`
     );
   }
 
@@ -86,7 +86,7 @@ function validateFacilitatorUrl(url: string): void {
   // Block dangerous protocols
   if (protocol === "javascript:" || protocol === "data:") {
     throw new Error(
-      `[tollgate] facilitatorUrl protocol "${protocol}" is not allowed. Use HTTPS.`
+      `[monapi] facilitatorUrl protocol "${protocol}" is not allowed. Use HTTPS.`
     );
   }
 
@@ -95,7 +95,7 @@ function validateFacilitatorUrl(url: string): void {
     const hostname = parsed.hostname;
     if (hostname !== "localhost" && hostname !== "127.0.0.1" && hostname !== "::1") {
       throw new Error(
-        `[tollgate] facilitatorUrl must use HTTPS (HTTP is only allowed for localhost). Got "${url}".`
+        `[monapi] facilitatorUrl must use HTTPS (HTTP is only allowed for localhost). Got "${url}".`
       );
     }
     return;
@@ -103,19 +103,19 @@ function validateFacilitatorUrl(url: string): void {
 
   if (protocol !== "https:") {
     throw new Error(
-      `[tollgate] facilitatorUrl must use HTTPS. Got protocol "${protocol}".`
+      `[monapi] facilitatorUrl must use HTTPS. Got protocol "${protocol}".`
     );
   }
 }
 
-export function validateConfig(config: TollgateConfig): void {
+export function validateConfig(config: MonapiConfig): void {
   // -- wallet --
   if (!config.wallet) {
-    throw new Error("[tollgate] `wallet` is required");
+    throw new Error("[monapi] `wallet` is required");
   }
   if (!EVM_ADDRESS_RE.test(config.wallet)) {
     throw new Error(
-      `[tollgate] Invalid wallet address: "${config.wallet}". Must be a valid EVM address (0x + 40 hex characters).`
+      `[monapi] Invalid wallet address: "${config.wallet}". Must be a valid EVM address (0x + 40 hex characters).`
     );
   }
   warnIfNotChecksummed(config.wallet);
@@ -123,7 +123,7 @@ export function validateConfig(config: TollgateConfig): void {
   // -- price or routes required --
   if (config.price == null && config.routes == null) {
     throw new Error(
-      "[tollgate] Either `price` (global) or `routes` (per-route) must be specified"
+      "[monapi] Either `price` (global) or `routes` (per-route) must be specified"
     );
   }
 
@@ -145,7 +145,7 @@ export function validateConfig(config: TollgateConfig): void {
     const knownNetworks = Object.keys(NETWORKS);
     if (!knownNetworks.includes(config.network)) {
       throw new Error(
-        `[tollgate] Unknown network "${config.network}". Supported: ${knownNetworks.join(", ")}`
+        `[monapi] Unknown network "${config.network}". Supported: ${knownNetworks.join(", ")}`
       );
     }
   }
@@ -156,7 +156,7 @@ export function validateConfig(config: TollgateConfig): void {
     const knownTokens = Object.keys(TOKENS[network] ?? {});
     if (!knownTokens.includes(config.token)) {
       throw new Error(
-        `[tollgate] Unknown token "${config.token}" for network "${network}". Supported: ${knownTokens.join(", ")}`
+        `[monapi] Unknown token "${config.token}" for network "${network}". Supported: ${knownTokens.join(", ")}`
       );
     }
   }
@@ -169,7 +169,7 @@ export function validateConfig(config: TollgateConfig): void {
       config.maxTimeoutSeconds > MAX_TIMEOUT_SECONDS
     ) {
       throw new Error(
-        `[tollgate] \`maxTimeoutSeconds\` must be between ${MIN_TIMEOUT_SECONDS} and ${MAX_TIMEOUT_SECONDS}. Got ${config.maxTimeoutSeconds}.`
+        `[monapi] \`maxTimeoutSeconds\` must be between ${MIN_TIMEOUT_SECONDS} and ${MAX_TIMEOUT_SECONDS}. Got ${config.maxTimeoutSeconds}.`
       );
     }
   }
