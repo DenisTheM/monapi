@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://tollgate.sh/logo.png" alt="Tollgate" width="120" />
-</p>
-
 <h1 align="center">@tollgate/sdk</h1>
 
 <p align="center">
