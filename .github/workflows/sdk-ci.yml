@@ -72,13 +72,9 @@ jobs:
           cache-dependency-path: packages/sdk/package-lock.json
 
       - run: npm ci
-      - run: npm run build
-
-      # Ensure .npmrc with auth is available in working directory
-      - name: Configure npm auth
-        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run build
 
       # Only publish if version changed
       - name: Check if version changed
@@ -93,6 +89,8 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Version $LOCAL already published, skipping"
           fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish with provenance
         if: steps.version.outputs.changed == 'true'
