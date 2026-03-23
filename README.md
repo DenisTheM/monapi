@@ -35,7 +35,7 @@ After  (Tollgate):  1 function, 3 lines of code
 ### 1. Install
 
 ```bash
-npm install @tollgate/sdk
+npm install @tollgate/sdk @x402/express
 ```
 
 ### 2. Add to your API
