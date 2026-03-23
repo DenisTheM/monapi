@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/DenisTheM/tollgate-sdk/actions"><img src="https://github.com/DenisTheM/tollgate-sdk/actions/workflows/sdk-ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/DenisTheM/tollgate-sdk/actions/workflows/sdk-ci.yml"><img src="https://github.com/DenisTheM/tollgate-sdk/actions/workflows/sdk-ci.yml/badge.svg" alt="CI" /></a>
   <a href="https://github.com/DenisTheM/tollgate-sdk/blob/main/packages/sdk/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License" /></a>
 </p>
 
