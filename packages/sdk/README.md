@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/DenisTheM/monapi/main/packages/sdk/assets/logo.svg" alt="MonAPI" width="100" />
+  <img src="https://raw.githubusercontent.com/DenisTheM/monapi/main/packages/sdk/assets/logo.svg" alt="monapi" width="100" />
 </p>
 
 <h1 align="center">@monapi/sdk</h1>
@@ -17,15 +17,15 @@
 
 ---
 
-## Why MonAPI?
+## Why monapi?
 
 The [x402 protocol](https://www.x402.org) enables native HTTP payments — but integrating it requires understanding CAIP-2 network IDs, token contract addresses, facilitator configuration, scheme registration, and more.
 
-**MonAPI wraps all of that into a single function call.** You provide your wallet address and a price. We handle the rest.
+**monapi wraps all of that into a single function call.** You provide your wallet address and a price. We handle the rest.
 
 ```
 Before (raw x402):  7+ concepts, 30+ lines of boilerplate
-After  (MonAPI):  1 function, 3 lines of code
+After  (monapi):  1 function, 3 lines of code
 ```
 
 ---
@@ -212,7 +212,7 @@ The callback is fire-and-forget — it never blocks the API response.
 ```
 1. Client calls your API
          ↓
-2. MonAPI middleware intercepts the request
+2. monapi middleware intercepts the request
          ↓
 3. No payment? → Returns 402 Payment Required
    (includes: price, token, network, wallet address)
@@ -228,7 +228,7 @@ The callback is fire-and-forget — it never blocks the API response.
 8. USDC arrives in your wallet
 ```
 
-**No MonAPI account needed.** No dashboard, no API keys, no middleman. Payments go directly from the client to your wallet on the blockchain.
+**No monapi account needed.** No dashboard, no API keys, no middleman. Payments go directly from the client to your wallet on the blockchain.
 
 **Zero gas fees for agents.** USDC payments use EIP-3009 (`transferWithAuthorization`) — the x402 facilitator sponsors gas. Agents only need USDC, no native tokens like ETH or MATIC.
 
@@ -274,7 +274,7 @@ Any EVM-compatible wallet works — MetaMask, Rainbow, etc.
 
 ## Security
 
-- **No private keys** — MonAPI only uses your public wallet address
+- **No private keys** — monapi only uses your public wallet address
 - **No data storage** — The SDK runs entirely in your infrastructure
 - **No middleman** — Payments go directly from client to your wallet
 - **Input validation** — Wallet addresses, prices, routes, and URLs are rigorously validated
@@ -314,7 +314,7 @@ npm install @monapi/sdk @x402/mcp
 AI agents with x402-compatible wallets (like Coinbase AgentKit) automatically detect the 402 response, pay the requested amount in USDC, and retry the request — all without human intervention. Agents only need USDC — no native tokens (ETH, MATIC) required. Gas fees are sponsored by the x402 facilitator.
 
 **What are the transaction fees?**
-Base network fees are typically < $0.01 per transaction. There are no MonAPI fees.
+Base network fees are typically < $0.01 per transaction. There are no monapi fees.
 
 **Can I change prices without redeploying?**
 Currently, prices are set in code. Dynamic pricing and a management dashboard are planned for a future release.

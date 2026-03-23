@@ -87,7 +87,7 @@ server.tool("search", { query: z.string() },
 };
 
 async function main() {
-  console.log("\n⚡ MonAPI Setup\n");
+  console.log("\n⚡ monapi Setup\n");
   console.log("Monetize your API with one line of code.\n");
 
   // 1. Framework detection

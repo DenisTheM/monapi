@@ -17,7 +17,7 @@ If you discover a security vulnerability in `@monapi/sdk`, please report it resp
 ## What qualifies?
 
 - Input validation bypasses
-- Dependency vulnerabilities that affect MonAPI users
+- Dependency vulnerabilities that affect monapi users
 - Supply chain attack vectors
 - Payment routing manipulation
 - Configuration injection
