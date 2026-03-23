@@ -180,10 +180,17 @@ Why Coinbase:
   };
   const peerDep = peerDeps[framework];
 
+  const fileNames: Record<string, string> = {
+    express: "server.ts (or server.js)",
+    next: "app/api/hello/route.ts",
+    mcp: "mcp-server.ts",
+  };
+
   console.log("Next steps:");
-  console.log(`  1. npm install ${peerDep}`);
-  console.log(`  2. Paste the code snippet above into your project`);
-  console.log(`  3. Start your server`);
+  console.log(`  1. Run: npm install ${peerDep}`);
+  console.log(`  2. Create a file called ${fileNames[framework]}`);
+  console.log(`     and paste the code snippet above into it`);
+  console.log(`  3. Start your server: npx tsx ${fileNames[framework].split(" ")[0]}`);
   if (network.includes("sepolia") || network.includes("amoy")) {
     console.log(`  4. Test: curl -i http://localhost:3000/api/hello`);
     console.log(`     → You should get a 402 Payment Required response`);
