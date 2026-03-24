@@ -3,6 +3,11 @@
   "version": "0.1.4",
   "description": "One-line API monetization with x402. Accept crypto payments with a single function call.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DenisTheM/monapi",
+    "directory": "packages/sdk"
+  },
   "type": "module",
   "exports": {
     ".": {
