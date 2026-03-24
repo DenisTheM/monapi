@@ -1,6 +1,6 @@
 {
   "name": "@monapi/sdk",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "One-line API monetization with x402. Accept crypto payments with a single function call.",
   "license": "MIT",
   "type": "module",
