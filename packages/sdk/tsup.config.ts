@@ -1,5 +1,7 @@
 import { defineConfig } from "tsup";
 
+const esmRequireShim = "import { createRequire } from 'module'; const require = createRequire(import.meta.url);";
+
 export default defineConfig([
   {
     entry: {
@@ -7,10 +9,22 @@ export default defineConfig([
       next: "src/next.ts",
       mcp: "src/mcp.ts",
     },
-    format: ["esm", "cjs"],
+    format: ["esm"],
     dts: true,
     sourcemap: true,
     clean: true,
+    splitting: true,
+    outDir: "dist",
+    banner: { js: esmRequireShim },
+  },
+  {
+    entry: {
+      index: "src/index.ts",
+      next: "src/next.ts",
+      mcp: "src/mcp.ts",
+    },
+    format: ["cjs"],
+    sourcemap: true,
     splitting: true,
     outDir: "dist",
   },
